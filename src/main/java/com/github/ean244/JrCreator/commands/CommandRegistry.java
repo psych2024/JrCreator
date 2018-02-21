@@ -5,8 +5,9 @@ import java.util.Map;
 
 public class CommandRegistry {
 	private final Map<String, Commands> commands;
+	private static CommandRegistry instance;
 	
-	public CommandRegistry() {
+	private CommandRegistry() {
 		commands = new HashMap<>();
 	}
 	
@@ -17,5 +18,12 @@ public class CommandRegistry {
 	
 	public Commands getCommand(String name) {
 		return commands.get(name);
+	}
+	
+	public static CommandRegistry getInstance() {
+		if(instance == null)
+			instance = new CommandRegistry();
+		
+		return instance;
 	}
 }

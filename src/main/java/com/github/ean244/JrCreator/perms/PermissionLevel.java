@@ -9,7 +9,15 @@ public enum PermissionLevel {
 		this.i = i;
 	}
 	
-	public int getLevel() {
+	public int level() {
 		return i;
+	}
+	
+	public static PermissionLevel of(int i) {
+		for(PermissionLevel level : PermissionLevel.values()) {
+			if(level.i == i)  return level;
+		}
+		
+		throw new IllegalArgumentException("Invalid level!");
 	}
 }
