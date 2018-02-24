@@ -38,8 +38,8 @@ public class DbHandler {
 	public void connDb() {
 		LOGGER.info("Initializing data source...");
 
-		this.dataSource = new HikariDataSource(new HikariConfig("db.properties"));
-
+		this.dataSource = new HikariDataSource(new HikariConfig("src/main/resources/db.properties"));
+		
 		LOGGER.info("Data source successfully initialized!!");
 
 		createTables();
@@ -82,5 +82,13 @@ public class DbHandler {
 
 	public Connection getConn() throws SQLException {
 		return dataSource.getConnection();
+	}
+	
+	public void closeConn() {
+		LOGGER.info("Closing connection to data source...");
+		
+		dataSource.close();
+		
+		LOGGER.info("Connection closed!");
 	}
 }

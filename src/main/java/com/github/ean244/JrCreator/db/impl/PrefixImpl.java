@@ -35,6 +35,7 @@ public class PrefixImpl implements PrefixRequest, PrefixUpdate {
 			ResultSet result = statement.executeQuery();
 
 			if (result.next()) {
+				LOGGER.info("Prefix found in db: {}" , result.getString("prefix"));
 				return result.getString("prefix");
 			}
 
@@ -42,6 +43,7 @@ public class PrefixImpl implements PrefixRequest, PrefixUpdate {
 			LOGGER.error("Failed to request prefix!", e);
 		}
 		
+		LOGGER.info("Prefix not found in db, returning default");
 		return DefaultSettings.PREFIX;
 	}
 

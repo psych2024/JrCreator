@@ -26,7 +26,7 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 	private static final String REQUEST_MEMBER = "SELECT * FROM Users WHERE userId=? AND guildId=?";
 	private static final String REQUEST_CATEGORY = "SELECT * FROM Users WHERE guildId=? AND perms=?";
 	private static final String UPDATE_PERMISSION = "INSERT INTO Users (userId, guildId, perms) VALUES (?,?,?) ON DUPLICATE KEY UPDATE perms=?";
-	
+
 	@Override
 	public Set<Long> requestCategory(Guild guild, PermissionLevel perms) {
 		long id = guild.getIdLong();
@@ -47,12 +47,16 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 				set.add(result.getLong("userId"));
 			}
 
+			guild.getMemberCache().stream().filter(m -> !set.contains(m.getUser().getIdLong()))
+					.filter(m -> DefaultSettings.defaultPermission(m).level() >= perms.level())
+					.filter(m -> !m.getUser().isBot()).forEach(m -> set.add(m.getUser().getIdLong()));
+
 			return Collections.unmodifiableSet(set);
 
 		} catch (SQLException e) {
 			LOGGER.error("Failed to fetch {}!", perms.toString(), e);
 		}
-		
+
 		return DefaultSettings.defaultCategory(guild, perms);
 	}
 
@@ -60,25 +64,29 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 	public PermissionLevel requestIndividual(Guild guild, Member member) {
 		long guildId = guild.getIdLong();
 		long memberId = member.getUser().getIdLong();
-		
+
 		LOGGER.info("Fetching permissions for member {} in guild {}...", memberId, guildId);
-		
+
 		try (Connection connection = DbHandler.getInstance().getConn();
 				PreparedStatement statement = connection.prepareStatement(REQUEST_MEMBER)) {
-			
+
 			statement.setLong(1, memberId);
 			statement.setLong(2, guildId);
-			
+
 			ResultSet result = statement.executeQuery();
-			
-			if(result.next()) {
+
+			if (result.next()) {
+				LOGGER.info("Recieved {}", result.getInt("perms"));
+				
 				return PermissionLevel.of(result.getInt("perms"));
 			}
-			
+
 		} catch (SQLException e) {
 			LOGGER.error("Failed to fetch permissions for member!", e);
 		}
-		
+
+		LOGGER.info("Permissions not found, default to {}", DefaultSettings.defaultPermission(member));
+
 		return DefaultSettings.defaultPermission(member);
 	}
 
@@ -86,19 +94,19 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 	public void update(Guild guild, Member member, PermissionLevel perms) {
 		long guildId = guild.getIdLong();
 		long memberId = member.getUser().getIdLong();
-		
+
 		LOGGER.info("Updating permissions for member {} in guild {}...", memberId, guildId);
-		
+
 		try (Connection connection = DbHandler.getInstance().getConn();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_PERMISSION)) {
-			
+
 			statement.setLong(1, memberId);
 			statement.setLong(2, guildId);
 			statement.setLong(3, perms.level());
 			statement.setLong(4, perms.level());
-			
+
 			statement.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			LOGGER.error("Failed to update permissions for member!", e);
 		}

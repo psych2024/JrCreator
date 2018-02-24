@@ -8,6 +8,6 @@ public interface Commands {
 	public boolean onExecute(TextChannel channel, Guild guild, Member member, String[] args);
 	
 	public default CommandMeta meta() {
-		return Commands.class.getAnnotation(CommandMeta.class);
+		return getClass().getAnnotation(CommandMeta.class);
 	}
 }

@@ -18,7 +18,7 @@ public class DefaultSettings {
 	public static Set<Long> defaultAdmins(Guild guild) {
 		Set<Long> admins = new HashSet<>();
 		admins.add(guild.getOwner().getUser().getIdLong());
-		guild.getMemberCache().stream().filter(m -> m.hasPermission(Permission.ADMINISTRATOR))
+		guild.getMemberCache().stream().filter(m -> m.hasPermission(Permission.ADMINISTRATOR)).filter(m -> !m.getUser().isBot())
 				.forEach(m -> admins.add(m.getUser().getIdLong()));
 
 		return admins;
@@ -26,7 +26,7 @@ public class DefaultSettings {
 
 	public static Set<Long> defaultDjsAndUsers(Guild guild) {
 		Set<Long> djs = new HashSet<>();
-		guild.getMemberCache().stream().forEach(m -> djs.add(m.getUser().getIdLong()));
+		guild.getMemberCache().stream().filter(m -> !m.getUser().isBot()).forEach(m -> djs.add(m.getUser().getIdLong()));
 		return djs;
 	}
 

@@ -20,4 +20,12 @@ public enum PermissionLevel {
 		
 		throw new IllegalArgumentException("Invalid level!");
 	}
+	
+	public static PermissionLevel of(String s) {
+		for(PermissionLevel level : PermissionLevel.values()) {
+			if(level.toString().equalsIgnoreCase(s))  return level;
+		}
+		
+		throw new IllegalArgumentException("Invalid level!");
+	}
 }
