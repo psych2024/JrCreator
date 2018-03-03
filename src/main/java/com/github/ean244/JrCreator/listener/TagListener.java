@@ -17,7 +17,7 @@ public class TagListener extends ListenerAdapter {
 			return;
 		
 		if(msg[0].equals(JrCreator.getJda().getSelfUser().getAsMention())) {
-			channel.sendMessage("Received " + event.getAuthor().getAsMention()).queue();
+			channel.sendMessage("Received " + event.getAuthor().getAsMention() + "\nThis is a test").queue();
 		}
 	}
 }

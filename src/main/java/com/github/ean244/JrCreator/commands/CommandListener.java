@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 
 import com.github.ean244.jrcreator.db.impl.PermissionsImpl;
 import com.github.ean244.jrcreator.db.impl.PrefixImpl;
+import com.github.ean244.jrcreator.main.JrCreator;
 
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
@@ -28,12 +29,17 @@ public class CommandListener extends ListenerAdapter {
 		Member member = event.getMember();
 		String msg = event.getMessage().getContentDisplay();
 		String prefix = new PrefixImpl().request(guild);
-
+		
 		if(event.getAuthor().isBot())
 			return;
 		
-		if (msg.startsWith(prefix)) {
-			String[] args = msg.substring(1).split(" ");
+		if (msg.startsWith(prefix) || msg.split(" ")[0].equals(JrCreator.getJda().getSelfUser().getAsMention())) {
+			String[] args = msg.split(" ");
+			
+			if(msg.startsWith(prefix)) {
+				args[0] = args[0].substring(1);
+			}
+			
 			Commands commands = CommandRegistry.getInstance().getCommand(args[0]);
 
 			if (commands == null)
