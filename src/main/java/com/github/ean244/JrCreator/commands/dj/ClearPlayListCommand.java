@@ -10,25 +10,20 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-@CommandMeta(aliases = {}, name = "join", permission = PermissionLevel.DJ)
-public class JoinCommand implements Commands {
+@CommandMeta(aliases = { "clearplaylist", "clearlist" }, name = "clear", permission = PermissionLevel.DJ)
+public class ClearPlayListCommand implements Commands {
 
 	@Override
 	public boolean onExecute(TextChannel channel, Guild guild, Member member, String[] args) {
-		if (args.length != 0)
-			return false;
-
 		GuildPlayer player = GuildPlayerRegistry.getGuildPlayer(guild);
-
-		player.leave();
-
-		if (!member.getVoiceState().inVoiceChannel()) {
-			channel.sendMessage("You are not in a voice channel!").queue();
+		
+		if(player.getScheduler().getPlaylist().isEmpty()) {
+			channel.sendMessage("No tracks to clear!").queue();
 			return true;
 		}
-
-		channel.sendMessage("Joining your voice channel").queue();
-		player.join(member.getVoiceState().getChannel());
+		
+		player.getScheduler().getPlaylist().clear();
+		channel.sendMessage("Cleared all tracks!").queue();
 		return true;
 	}
 

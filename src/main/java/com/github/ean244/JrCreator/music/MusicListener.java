@@ -13,7 +13,7 @@ public class MusicListener extends ListenerAdapter {
 			return;
 		
 		
-		GuildPlayer guildPlayer = GuildPlayerRegistry.getInstance().getGuildPlayer(event.getGuild());
+		GuildPlayer guildPlayer = GuildPlayerRegistry.getGuildPlayer(event.getGuild());
 		event.getGuild().getDefaultChannel().sendMessage("Leaving voice channel as no one is inside").queue();
 		guildPlayer.leave();
 	}

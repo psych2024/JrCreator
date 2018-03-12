@@ -18,7 +18,7 @@ public class LeaveCommand implements Commands {
 		if (args.length != 0)
 			return false;
 
-		GuildPlayer player = GuildPlayerRegistry.getInstance().getGuildPlayer(guild);
+		GuildPlayer player = GuildPlayerRegistry.getGuildPlayer(guild);
 
 		channel.sendMessage("Leaving from voice channel").queue();
 		player.leave();

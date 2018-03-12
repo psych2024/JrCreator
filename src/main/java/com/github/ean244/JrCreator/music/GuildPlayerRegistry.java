@@ -13,11 +13,11 @@ public class GuildPlayerRegistry {
 		this.guildPlayers = new HashMap<>();
 	}
 
-	public GuildPlayer getGuildPlayer(Guild guild) {
-		if(guildPlayers.get(guild) == null)
-			guildPlayers.put(guild, new GuildPlayer(guild));
+	public static GuildPlayer getGuildPlayer(Guild guild) {
+		if(instance.guildPlayers.get(guild) == null)
+			instance.guildPlayers.put(guild, new GuildPlayer(guild));
 		
-		return guildPlayers.get(guild);
+		return instance.guildPlayers.get(guild);
 	}
 	
 	public static GuildPlayerRegistry getInstance() {

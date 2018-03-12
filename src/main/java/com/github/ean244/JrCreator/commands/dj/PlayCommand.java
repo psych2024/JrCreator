@@ -28,7 +28,7 @@ public class PlayCommand implements Commands {
 			return true;
 		}
 		
-		GuildPlayer guildPlayer = GuildPlayerRegistry.getInstance().getGuildPlayer(guild);
+		GuildPlayer guildPlayer = GuildPlayerRegistry.getGuildPlayer(guild);
 		
 		if(!guildPlayer.getScheduler().hasSelected(member)) {
 			channel.sendMessage("You have not load a playlist yet").queue();
@@ -43,7 +43,7 @@ public class PlayCommand implements Commands {
 		guildPlayer.getScheduler().loadSelectedTrack(member, id);
 		guildPlayer.join(member.getVoiceState().getChannel());
 		guildPlayer.play();
-		channel.sendMessage("Playing **" + guildPlayer.getScheduler().currentLoadedTrack().getInfo().title + "**").queue();
+		channel.sendMessage("Playing **" + guildPlayer.getScheduler().currentLoadedTrack().getTitle() + "**").queue();
 		return true;
 	}
 	

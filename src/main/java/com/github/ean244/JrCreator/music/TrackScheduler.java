@@ -6,23 +6,21 @@ import java.util.List;
 import java.util.Map;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import net.dv8tion.jda.core.entities.Member;
 
 public class TrackScheduler {
-	private final GuildPlayer player;
-	private final List<AudioTrack> tracks;
+	private final List<TrackWrapper> playlist;
 	private final Map<Member, AudioPlaylist> memberSelectedTrack;
 	
-	public TrackScheduler(GuildPlayer player) {
-		this.player = player;
-		this.tracks = new ArrayList<>();
+	public TrackScheduler() {
+		this.playlist = new ArrayList<>();
 		this.memberSelectedTrack = new HashMap<>();
 	}
 	
 	public void loadSelectedTrack(Member member, int index) {
-		loadTrack(memberSelectedTrack.get(member).getTracks().get(index));
+		TrackWrapper wrapper = new TrackWrapper(memberSelectedTrack.get(member).getTracks().get(0), member);
+		loadTrack(wrapper);
 	}
 	
 	public void assignTrack(Member member, AudioPlaylist list) {
@@ -33,19 +31,23 @@ public class TrackScheduler {
 		return memberSelectedTrack.containsKey(member);
 	}
 	
-	public void loadTrack(AudioTrack audioTrack) {
-		this.tracks.add(audioTrack);
+	public void loadTrack(TrackWrapper track) {
+		this.playlist.add(track);
 	}
 	
-	public AudioTrack currentLoadedTrack() {
-		return tracks.get(0);
+	public TrackWrapper currentLoadedTrack() {
+		return playlist.get(0);
 	}
 	
 	public void next() {
-		tracks.remove(0);
+		playlist.remove(0);
 	}
 	
-	public GuildPlayer getPlayer() {
-		return player;
+	public boolean hasNext() {
+		return !playlist.isEmpty();
+	}
+	
+	public List<TrackWrapper> getPlaylist() {
+		return playlist;
 	}
 }

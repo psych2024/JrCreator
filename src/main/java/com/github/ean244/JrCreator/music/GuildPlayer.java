@@ -12,76 +12,83 @@ import net.dv8tion.jda.core.managers.AudioManager;
 public class GuildPlayer {
 	private final AudioPlayer player;
 	private final Guild guild;
+	private PlayerState state;
 	private VoiceChannel joinedChannel;
 	private final TrackScheduler scheduler;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(GuildPlayer.class);
-	
+
 	public GuildPlayer(Guild guild) {
-		this.player = MusicHandler.getInstance().createPlayer();
+		this.player = MusicHandler.getInstance().newPlayer();
 		this.guild = guild;
-		this.scheduler = new TrackScheduler(this);
+		this.state = PlayerState.NOT_JOINED;
+		this.scheduler = new TrackScheduler();
 		this.player.addListener(new GuildPlayerListener(this));
 	}
-	
+
 	public void join(VoiceChannel channel) {
-		LOGGER.info("join");
-		
+		this.state = PlayerState.JOINED;
+		logState();
+
 		AudioManager audioManager = guild.getAudioManager();
-		
+
 		joinedChannel = channel;
-		
-		if(audioManager.isConnected())
+
+		if (audioManager.isConnected())
 			audioManager.closeAudioConnection();
-		
+
 		audioManager.setSendingHandler(new CustomSendHandler(player));
 		audioManager.openAudioConnection(channel);
 	}
-	
+
 	public void leave() {
-		LOGGER.info("leave");
-		
+		this.state = PlayerState.NOT_JOINED;
+		logState();
+
 		stop();
-		
+
 		joinedChannel = null;
-		
+
 		guild.getAudioManager().closeAudioConnection();
 	}
-	
+
 	public void play() {
-		LOGGER.info("play");
-		
-		if(player.isPaused())
+		this.state = PlayerState.PLAYING;
+		logState();
+
+		if (player.isPaused())
 			player.setPaused(false);
-		
-		if(scheduler.currentLoadedTrack() == null) {
-			leave();
-			return;
-		}
-		
-		player.playTrack(scheduler.currentLoadedTrack());
+
+		player.playTrack(scheduler.currentLoadedTrack().getTrack());
 	}
-	
+
 	public void pause() {
-		LOGGER.info("pause");
-		
+		this.state = PlayerState.PAUSED;
+		logState();
+
 		player.setPaused(true);
 	}
-	
+
 	public void next() {
 		LOGGER.info("next");
-		
+
 		stop();
-		
+
 		play();
 	}
-	
+
 	public void stop() {
-		LOGGER.info("stop");
-		
+		this.state = PlayerState.STOPPED;
+		logState();
+
 		player.stopTrack();
-		
-		scheduler.next();
+
+		if (scheduler.hasNext()) {
+			scheduler.next();
+			return;
+		}
+
+		leave();
 	}
 
 	public AudioPlayer getPlayer() {
@@ -91,16 +98,24 @@ public class GuildPlayer {
 	public VoiceChannel getJoinedChannel() {
 		return joinedChannel;
 	}
-	
+
 	public boolean isInChannel() {
 		return joinedChannel != null;
 	}
-	
+
 	public Guild getGuild() {
 		return guild;
 	}
-	
+
 	public TrackScheduler getScheduler() {
 		return scheduler;
+	}
+	
+	public PlayerState getState() {
+		return state;
+	}
+
+	private void logState() {
+		LOGGER.info("Changed PlayerState for Guild {}: {}", guild.getIdLong(), state);
 	}
 }

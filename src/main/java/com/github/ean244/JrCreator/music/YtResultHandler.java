@@ -1,7 +1,5 @@
 package com.github.ean244.jrcreator.music;
 
-import java.util.concurrent.TimeUnit;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,23 +31,20 @@ public class YtResultHandler implements AudioLoadResultHandler {
 	
 	@Override
 	public void trackLoaded(AudioTrack track) {
-		GuildPlayer guildPlayer = GuildPlayerRegistry.getInstance().getGuildPlayer(guild);
-		guildPlayer.getScheduler().loadTrack(track);
+		GuildPlayer guildPlayer = GuildPlayerRegistry.getGuildPlayer(guild);
+		guildPlayer.getScheduler().loadTrack(new TrackWrapper(track, member));
 		guildPlayer.play();
 	}
 
 	@Override
 	public void playlistLoaded(AudioPlaylist playlist) {
+		AudioPlaylistWrapper wrapper = new AudioPlaylistWrapper(playlist, member);
+		
 		MessageBuilder builder = new MessageBuilder().append("Please select from one of these songs:\n");
-		
-		for(int i = 1; i < 6; i++) {
-			AudioTrack track = playlist.getTracks().get(i);
-			builder.append(String.format("**%d.** %s %s%n", i, track.getInfo().title, formatMills(track.getDuration())));
-		}
-		
+		builder.append(wrapper.toString());
 		builder.append(String.format("%nDo `%splay 1-5` to start playing", new PrefixImpl().request(channel.getGuild())));
-		channel.sendMessage(builder.build()).queue();
-		GuildPlayerRegistry.getInstance().getGuildPlayer(guild).getScheduler().assignTrack(member, playlist);
+		channel.sendMessage(builder.toString()).queue();
+		GuildPlayerRegistry.getGuildPlayer(guild).getScheduler().assignTrack(member, playlist);
 	}
 
 	@Override
@@ -61,11 +56,5 @@ public class YtResultHandler implements AudioLoadResultHandler {
 	public void loadFailed(FriendlyException exception) {
 		channel.sendMessage("**WARNING** There was a problem while loading your search").queue();
 		LOGGER.error("Failed to execute search, error level {}", exception, exception.severity);
-	}
-	
-	private String formatMills(long mills) {
-		long minutes = TimeUnit.MILLISECONDS.toMinutes(mills);
-		long seconds = TimeUnit.MILLISECONDS.toSeconds(mills - minutes * 60 * 1000);
-		return String.format("(%02d:%02d)", minutes, seconds);
 	}
 }

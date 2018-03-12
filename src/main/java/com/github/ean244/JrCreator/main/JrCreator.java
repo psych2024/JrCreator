@@ -15,9 +15,13 @@ import com.github.ean244.jrcreator.commands.CommandListener;
 import com.github.ean244.jrcreator.commands.CommandRegistry;
 import com.github.ean244.jrcreator.commands.admin.ListCommand;
 import com.github.ean244.jrcreator.commands.admin.SetPrefixCommand;
+import com.github.ean244.jrcreator.commands.dj.ClearPlayListCommand;
 import com.github.ean244.jrcreator.commands.dj.JoinCommand;
 import com.github.ean244.jrcreator.commands.dj.LeaveCommand;
 import com.github.ean244.jrcreator.commands.dj.PlayCommand;
+import com.github.ean244.jrcreator.commands.dj.PlaylistCommand;
+import com.github.ean244.jrcreator.commands.dj.SkipCommand;
+import com.github.ean244.jrcreator.commands.dj.StopCommand;
 import com.github.ean244.jrcreator.commands.dj.YoutubeCommand;
 import com.github.ean244.jrcreator.commands.user.AnnouncementCommand;
 import com.github.ean244.jrcreator.commands.user.GithubCommand;
@@ -140,6 +144,10 @@ public class JrCreator {
 		registry.register(new LeaveCommand());
 		registry.register(new JoinCommand());
 		registry.register(new PlayCommand());
+		registry.register(new PlaylistCommand());
+		registry.register(new StopCommand());
+		registry.register(new SkipCommand());
+		registry.register(new ClearPlayListCommand());
 	}
 
 	public static JDA getJda() {

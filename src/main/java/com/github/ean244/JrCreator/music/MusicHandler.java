@@ -26,7 +26,7 @@ public class MusicHandler {
 		return manager;
 	}
 
-	public AudioPlayer createPlayer() {
+	public AudioPlayer newPlayer() {
 		return manager.createPlayer();
 	}
 }
