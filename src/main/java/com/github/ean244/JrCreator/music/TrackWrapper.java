@@ -33,8 +33,8 @@ public class TrackWrapper {
 	}
 	
 	public String duration() {
-		long minutes = TimeUnit.MILLISECONDS.toMinutes(track.getInfo().length);
-		long seconds = TimeUnit.MILLISECONDS.toSeconds(track.getInfo().length - minutes * 60 * 1000);
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(track.getPosition());
+		long seconds = TimeUnit.MILLISECONDS.toSeconds(track.getPosition() - minutes * 60 * 1000);
 		return String.format("(%02d:%02d)", minutes, seconds);
 	}
 }

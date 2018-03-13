@@ -21,6 +21,7 @@ import com.github.ean244.jrcreator.commands.dj.LeaveCommand;
 import com.github.ean244.jrcreator.commands.dj.PauseCommand;
 import com.github.ean244.jrcreator.commands.dj.PlayCommand;
 import com.github.ean244.jrcreator.commands.dj.PlaylistCommand;
+import com.github.ean244.jrcreator.commands.dj.ResumeCommand;
 import com.github.ean244.jrcreator.commands.dj.SkipCommand;
 import com.github.ean244.jrcreator.commands.dj.StopCommand;
 import com.github.ean244.jrcreator.commands.dj.YoutubeCommand;
@@ -150,6 +151,7 @@ public class JrCreator {
 		registry.register(new SkipCommand());
 		registry.register(new ClearPlayListCommand());
 		registry.register(new PauseCommand());
+		registry.register(new ResumeCommand());
 	}
 
 	public static JDA getJda() {

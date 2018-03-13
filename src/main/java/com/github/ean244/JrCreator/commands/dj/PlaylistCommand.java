@@ -20,7 +20,7 @@ public class PlaylistCommand implements Commands {
 	public boolean onExecute(TextChannel channel, Guild guild, Member member, String[] args) {
 		GuildPlayer player = GuildPlayerRegistry.getGuildPlayer(guild);
 		
-		if(!player.getScheduler().isPlaylistEmpty()) {
+		if(player.getScheduler().isPlaylistEmpty()) {
 			channel.sendMessage("No songs available!").queue();
 			return true;
 		}

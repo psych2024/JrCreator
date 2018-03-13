@@ -51,18 +51,30 @@ public class GuildPlayer {
 		logState();
 
 		joinedChannel = null;
+		
+		scheduler.clearPlaylistSongs();
 
 		guild.getAudioManager().closeAudioConnection();
 	}
 
 	public void play() {
+		if(this.state == PlayerState.PLAYING) 
+			throw new IllegalStateException("Play() called twice");
+		
 		this.state = PlayerState.PLAYING;
 		logState();
 
-		if (player.isPaused())
-			player.setPaused(false);
+		System.out.println("b4 stuck");
+		player.playTrack(scheduler.currentTrack().getTrack());
+		System.out.println("after stuck");
+		LOGGER.info("Playing track {} in guild {}", scheduler.currentTrack().getTitle(), guild.getName());
+	}
 
-		player.playTrack(scheduler.currentLoadedTrack().getTrack());
+	public void unpause() {
+		this.state = PlayerState.PLAYING;
+		logState();
+
+		player.setPaused(false);
 	}
 
 	public void pause() {
@@ -73,7 +85,7 @@ public class GuildPlayer {
 	}
 
 	public void next() {
-		LOGGER.info("next");
+		LOGGER.info("Skipping track...");
 
 		stop();
 

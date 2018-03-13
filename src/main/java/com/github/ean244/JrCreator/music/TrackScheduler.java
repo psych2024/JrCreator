@@ -37,7 +37,10 @@ public class TrackScheduler {
 		this.playlist.add(track);
 	}
 	
-	public TrackWrapper currentLoadedTrack() {
+	public TrackWrapper currentTrack() {
+		if(playlist.isEmpty())
+			throw new NullPointerException("Empty playlist");
+		
 		return playlist.get(0);
 	}
 	

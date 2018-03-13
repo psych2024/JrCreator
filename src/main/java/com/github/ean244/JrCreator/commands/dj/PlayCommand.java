@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-@CommandMeta(aliases = { "resume" }, name = "play", permission = PermissionLevel.DJ)
+@CommandMeta(aliases = { }, name = "play", permission = PermissionLevel.DJ)
 public class PlayCommand implements Commands {
 
 	@Override
@@ -54,7 +54,7 @@ public class PlayCommand implements Commands {
 		// no song join and play
 		guildPlayer.join(member.getVoiceState().getChannel());
 		guildPlayer.play();
-		channel.sendMessage("Playing **" + guildPlayer.getScheduler().currentLoadedTrack().getTitle() + "**").queue();
+		channel.sendMessage("Playing **" + guildPlayer.getScheduler().currentTrack().getTitle() + "**").queue();
 		return true;
 	}
 
