@@ -18,6 +18,7 @@ public class StopCommand implements Commands {
 	public boolean onExecute(TextChannel channel, Guild guild, Member member, String[] args) {
 		GuildPlayer player = GuildPlayerRegistry.getGuildPlayer(guild);
 		
+		System.out.println("stop");
 		if(player.getState() != PlayerState.PLAYING) {
 			channel.sendMessage("No music playing currently!").queue();
 			return true;

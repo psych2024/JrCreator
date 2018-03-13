@@ -17,12 +17,12 @@ public class ClearPlayListCommand implements Commands {
 	public boolean onExecute(TextChannel channel, Guild guild, Member member, String[] args) {
 		GuildPlayer player = GuildPlayerRegistry.getGuildPlayer(guild);
 		
-		if(player.getScheduler().getPlaylist().isEmpty()) {
+		if(player.getScheduler().isPlaylistEmpty()) {
 			channel.sendMessage("No tracks to clear!").queue();
 			return true;
 		}
 		
-		player.getScheduler().getPlaylist().clear();
+		player.getScheduler().clearPlaylistSongs();
 		channel.sendMessage("Cleared all tracks!").queue();
 		return true;
 	}

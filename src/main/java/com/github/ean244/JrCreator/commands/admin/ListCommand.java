@@ -27,6 +27,6 @@ public class ListCommand implements Commands {
 		new PermissionsImpl().requestCategory(guild, PermissionLevel.of(args[0]))
 				.forEach(id -> channel.sendMessage("- " + JrCreator.getJda().getUserById(id).getName()).queue());
 
-		return false;
+		return true;
 	}
 }

@@ -14,10 +14,10 @@ public class GuildPlayerRegistry {
 	}
 
 	public static GuildPlayer getGuildPlayer(Guild guild) {
-		if(instance.guildPlayers.get(guild) == null)
-			instance.guildPlayers.put(guild, new GuildPlayer(guild));
+		if(getInstance().guildPlayers.get(guild) == null)
+			getInstance().guildPlayers.put(guild, new GuildPlayer(guild));
 		
-		return instance.guildPlayers.get(guild);
+		return getInstance().guildPlayers.get(guild);
 	}
 	
 	public static GuildPlayerRegistry getInstance() {

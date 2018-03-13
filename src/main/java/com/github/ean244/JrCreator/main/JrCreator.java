@@ -18,6 +18,7 @@ import com.github.ean244.jrcreator.commands.admin.SetPrefixCommand;
 import com.github.ean244.jrcreator.commands.dj.ClearPlayListCommand;
 import com.github.ean244.jrcreator.commands.dj.JoinCommand;
 import com.github.ean244.jrcreator.commands.dj.LeaveCommand;
+import com.github.ean244.jrcreator.commands.dj.PauseCommand;
 import com.github.ean244.jrcreator.commands.dj.PlayCommand;
 import com.github.ean244.jrcreator.commands.dj.PlaylistCommand;
 import com.github.ean244.jrcreator.commands.dj.SkipCommand;
@@ -27,8 +28,8 @@ import com.github.ean244.jrcreator.commands.user.AnnouncementCommand;
 import com.github.ean244.jrcreator.commands.user.GithubCommand;
 import com.github.ean244.jrcreator.config.AnnouncementHandler;
 import com.github.ean244.jrcreator.db.DbHandler;
+import com.github.ean244.jrcreator.listener.VoiceLeaveListener;
 import com.github.ean244.jrcreator.listener.TagListener;
-import com.github.ean244.jrcreator.music.MusicListener;
 
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -130,7 +131,7 @@ public class JrCreator {
 	private static void addListener() {
 		jda.addEventListener(new CommandListener());
 		jda.addEventListener(new TagListener());
-		jda.addEventListener(new MusicListener());
+		jda.addEventListener(new VoiceLeaveListener());
 	}
 
 	private static void registerCommands() {
@@ -148,6 +149,7 @@ public class JrCreator {
 		registry.register(new StopCommand());
 		registry.register(new SkipCommand());
 		registry.register(new ClearPlayListCommand());
+		registry.register(new PauseCommand());
 	}
 
 	public static JDA getJda() {

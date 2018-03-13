@@ -43,7 +43,7 @@ public class YtResultHandler implements AudioLoadResultHandler {
 		MessageBuilder builder = new MessageBuilder().append("Please select from one of these songs:\n");
 		builder.append(wrapper.toString());
 		builder.append(String.format("%nDo `%splay 1-5` to start playing", new PrefixImpl().request(channel.getGuild())));
-		channel.sendMessage(builder.toString()).queue();
+		channel.sendMessage(builder.build()).queue();
 		GuildPlayerRegistry.getGuildPlayer(guild).getScheduler().assignTrack(member, playlist);
 	}
 

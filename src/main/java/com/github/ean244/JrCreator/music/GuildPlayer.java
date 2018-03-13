@@ -27,6 +27,8 @@ public class GuildPlayer {
 	}
 
 	public void join(VoiceChannel channel) {
+		leave();
+
 		this.state = PlayerState.JOINED;
 		logState();
 
@@ -42,10 +44,11 @@ public class GuildPlayer {
 	}
 
 	public void leave() {
+		// stop current song
+		stop();
+
 		this.state = PlayerState.NOT_JOINED;
 		logState();
-
-		stop();
 
 		joinedChannel = null;
 
@@ -87,8 +90,6 @@ public class GuildPlayer {
 			scheduler.next();
 			return;
 		}
-
-		leave();
 	}
 
 	public AudioPlayer getPlayer() {
@@ -110,12 +111,12 @@ public class GuildPlayer {
 	public TrackScheduler getScheduler() {
 		return scheduler;
 	}
-	
+
 	public PlayerState getState() {
 		return state;
 	}
 
 	private void logState() {
-		LOGGER.info("Changed PlayerState for Guild {}: {}", guild.getIdLong(), state);
+		LOGGER.info("Changed PlayerState for Guild {}: {}", guild.getName(), state);
 	}
 }

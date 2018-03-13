@@ -29,14 +29,12 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 
 	@Override
 	public Set<Long> requestCategory(Guild guild, PermissionLevel perms) {
-		long id = guild.getIdLong();
-
-		LOGGER.info("Fetching {} for guild {}", perms, id);
+		LOGGER.info("Fetching {} for guild {}", perms, guild.getName());
 
 		try (Connection connection = DbHandler.getInstance().getConn();
 				PreparedStatement statement = connection.prepareStatement(REQUEST_CATEGORY)) {
 
-			statement.setLong(1, id);
+			statement.setLong(1, guild.getIdLong());
 			statement.setInt(2, perms.level());
 
 			ResultSet result = statement.executeQuery();
@@ -62,16 +60,13 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 
 	@Override
 	public PermissionLevel requestIndividual(Guild guild, Member member) {
-		long guildId = guild.getIdLong();
-		long memberId = member.getUser().getIdLong();
-
-		LOGGER.info("Fetching permissions for member {} in guild {}...", memberId, guildId);
+		LOGGER.info("Fetching permissions for member {} in guild {}...", member.getUser().getName(), guild.getName());
 
 		try (Connection connection = DbHandler.getInstance().getConn();
 				PreparedStatement statement = connection.prepareStatement(REQUEST_MEMBER)) {
 
-			statement.setLong(1, memberId);
-			statement.setLong(2, guildId);
+			statement.setLong(1, member.getUser().getIdLong());
+			statement.setLong(2, guild.getIdLong());
 
 			ResultSet result = statement.executeQuery();
 
@@ -92,16 +87,13 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 
 	@Override
 	public void update(Guild guild, Member member, PermissionLevel perms) {
-		long guildId = guild.getIdLong();
-		long memberId = member.getUser().getIdLong();
-
-		LOGGER.info("Updating permissions for member {} in guild {}...", memberId, guildId);
+		LOGGER.info("Updating permissions for member {} in guild {}...", member.getUser().getName(), guild.getName());
 
 		try (Connection connection = DbHandler.getInstance().getConn();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_PERMISSION)) {
 
-			statement.setLong(1, memberId);
-			statement.setLong(2, guildId);
+			statement.setLong(1, member.getUser().getIdLong());
+			statement.setLong(2, guild.getIdLong());
 			statement.setLong(3, perms.level());
 			statement.setLong(4, perms.level());
 

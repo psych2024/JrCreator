@@ -4,14 +4,15 @@ import com.github.ean244.jrcreator.commands.CommandMeta;
 import com.github.ean244.jrcreator.commands.Commands;
 import com.github.ean244.jrcreator.music.GuildPlayer;
 import com.github.ean244.jrcreator.music.GuildPlayerRegistry;
+import com.github.ean244.jrcreator.music.PlayerState;
 import com.github.ean244.jrcreator.perms.PermissionLevel;
 
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-@CommandMeta(aliases = {}, name = "join", permission = PermissionLevel.DJ)
-public class JoinCommand implements Commands {
+@CommandMeta(aliases = {}, name = "pause", permission = PermissionLevel.DJ)
+public class PauseCommand implements Commands {
 
 	@Override
 	public boolean onExecute(TextChannel channel, Guild guild, Member member, String[] args) {
@@ -20,13 +21,13 @@ public class JoinCommand implements Commands {
 
 		GuildPlayer player = GuildPlayerRegistry.getGuildPlayer(guild);
 
-		if (!member.getVoiceState().inVoiceChannel()) {
-			channel.sendMessage("You are not in a voice channel!").queue();
+		if (player.getState() != PlayerState.PLAYING) {
+			channel.sendMessage("No song to pause!").queue();
 			return true;
 		}
 
-		channel.sendMessage("Joining your voice channel").queue();
-		player.join(member.getVoiceState().getChannel());
+		player.pause();
+		channel.sendMessage("Paused current song!").queue();
 		return true;
 	}
 

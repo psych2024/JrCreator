@@ -1,6 +1,7 @@
 package com.github.ean244.jrcreator.music;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +19,10 @@ public class TrackScheduler {
 		this.memberSelectedTrack = new HashMap<>();
 	}
 	
-	public void loadSelectedTrack(Member member, int index) {
-		TrackWrapper wrapper = new TrackWrapper(memberSelectedTrack.get(member).getTracks().get(0), member);
+	public TrackWrapper loadSelectedTrack(Member member, int index) {
+		TrackWrapper wrapper = new TrackWrapper(memberSelectedTrack.get(member).getTracks().get(index), member);
 		loadTrack(wrapper);
+		return wrapper;
 	}
 	
 	public void assignTrack(Member member, AudioPlaylist list) {
@@ -44,10 +46,19 @@ public class TrackScheduler {
 	}
 	
 	public boolean hasNext() {
-		return !playlist.isEmpty();
+		// 1 for current song
+		return playlist.size() > 1;
+	}
+	
+	public boolean isPlaylistEmpty() {
+		return playlist.isEmpty();
+	}
+	
+	public void clearPlaylistSongs() {
+		playlist.clear();
 	}
 	
 	public List<TrackWrapper> getPlaylist() {
-		return playlist;
+		return Collections.unmodifiableList(playlist);
 	}
 }

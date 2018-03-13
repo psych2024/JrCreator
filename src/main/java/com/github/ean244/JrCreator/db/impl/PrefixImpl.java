@@ -23,14 +23,12 @@ public class PrefixImpl implements PrefixRequest, PrefixUpdate {
 	
 	@Override
 	public String request(Guild guild) {
-		long id = guild.getIdLong();
-
-		LOGGER.info("Requesting prefix for guild id {}", id);
+		LOGGER.info("Requesting prefix for guild {}", guild.getName());
 
 		try (Connection connection = DbHandler.getInstance().getConn();
 				PreparedStatement statement = connection.prepareStatement(REQUEST_PREFIX)) {
 
-			statement.setLong(1, id);
+			statement.setLong(1, guild.getIdLong());
 
 			ResultSet result = statement.executeQuery();
 
@@ -49,14 +47,12 @@ public class PrefixImpl implements PrefixRequest, PrefixUpdate {
 
 	@Override
 	public void update(Guild guild, String prefix) {
-		long id = guild.getIdLong();
-
-		LOGGER.info("Updating prefix for guild id {}", id);
+		LOGGER.info("Updating prefix for guild {}", guild.getName());
 
 		try (Connection connection = DbHandler.getInstance().getConn();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_PREFIX)) {
 			
-			statement.setLong(1, id);
+			statement.setLong(1, guild.getIdLong());
 			statement.setString(2, prefix);
 			statement.setString(3, prefix);
 			
