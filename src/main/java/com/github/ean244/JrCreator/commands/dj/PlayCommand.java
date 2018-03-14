@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-@CommandMeta(aliases = { }, name = "play", permission = PermissionLevel.DJ)
+@CommandMeta(aliases = {}, name = "play", permission = PermissionLevel.DJ)
 public class PlayCommand implements Commands {
 
 	@Override
@@ -42,17 +42,20 @@ public class PlayCommand implements Commands {
 			return true;
 		}
 
-		TrackWrapper wrapper = guildPlayer.getScheduler().loadSelectedTrack(member, id);
-
 		// check if currently a song is played
 		if (guildPlayer.getState() == PlayerState.PLAYING) {
-			// track already scheduled
+			TrackWrapper wrapper = guildPlayer.getScheduler().loadSelectedTrack(member, id);
 			channel.sendMessage("Added **" + wrapper.toString() + "** to playlist").queue();
 			return true;
 		}
 
-		// no song join and play
-		guildPlayer.join(member.getVoiceState().getChannel());
+		// no songs playing, join the channel
+		if (!member.getVoiceState().getChannel().equals(guildPlayer.getJoinedChannel())) {
+			guildPlayer.join(member.getVoiceState().getChannel(), channel);
+		}
+
+		// load track after join, as joining clears the list
+		guildPlayer.getScheduler().loadSelectedTrack(member, id);
 		guildPlayer.play();
 		channel.sendMessage("Playing **" + guildPlayer.getScheduler().currentTrack().getTitle() + "**").queue();
 		return true;

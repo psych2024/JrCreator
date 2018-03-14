@@ -26,7 +26,7 @@ public class JoinCommand implements Commands {
 		}
 
 		channel.sendMessage("Joining your voice channel").queue();
-		player.join(member.getVoiceState().getChannel());
+		player.join(member.getVoiceState().getChannel(), channel);
 		return true;
 	}
 

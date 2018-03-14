@@ -27,7 +27,7 @@ public class ResumeCommand implements Commands {
 		}
 
 		player.unpause();
-		channel.sendMessage(String.format("Resuming song at %s", player.getScheduler().currentTrack().duration()))
+		channel.sendMessage(String.format("Resuming song at %s", player.getScheduler().currentTrack().currentDuration()))
 				.queue();
 		return true;
 	}

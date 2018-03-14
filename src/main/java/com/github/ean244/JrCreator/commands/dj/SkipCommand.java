@@ -18,8 +18,13 @@ public class SkipCommand implements Commands {
 	public boolean onExecute(TextChannel channel, Guild guild, Member member, String[] args) {
 		GuildPlayer player = GuildPlayerRegistry.getGuildPlayer(guild);
 		
-		if(!player.getScheduler().hasNext() || player.getState() != PlayerState.STOPPED) {
+		if(!player.getScheduler().hasNext()) {
 			channel.sendMessage("No more tracks loaded!").queue();
+			return true;
+		}
+		
+		if(player.getState() != PlayerState.PLAYING) {
+			channel.sendMessage("No songs are played now!").queue();
 			return true;
 		}
 		

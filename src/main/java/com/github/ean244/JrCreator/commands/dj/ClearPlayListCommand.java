@@ -23,6 +23,7 @@ public class ClearPlayListCommand implements Commands {
 		}
 		
 		player.getScheduler().clearPlaylistSongs();
+		player.leave();
 		channel.sendMessage("Cleared all tracks!").queue();
 		return true;
 	}

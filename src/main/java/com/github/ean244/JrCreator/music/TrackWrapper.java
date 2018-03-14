@@ -11,7 +11,7 @@ public class TrackWrapper {
 	private final Member requester;
 	
 	public TrackWrapper(AudioTrack track, Member requester) {
-		this.track = track;
+		this.track = track.makeClone();
 		this.requester = requester;
 	}
 	
@@ -29,12 +29,20 @@ public class TrackWrapper {
 	
 	@Override
 	public String toString() {
-		return track.getInfo().title + " " + duration();
+		return track.getInfo().title + " " + (track.getPosition() == 0 ? totalDuration() : currentDuration());
 	}
 	
-	public String duration() {
-		long minutes = TimeUnit.MILLISECONDS.toMinutes(track.getPosition());
-		long seconds = TimeUnit.MILLISECONDS.toSeconds(track.getPosition() - minutes * 60 * 1000);
+	public String totalDuration() {
+		return format(track.getDuration());
+	}
+	
+	public String currentDuration() {
+		return format(track.getPosition());
+	}
+	
+	private String format(long mills) {
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(mills);
+		long seconds = TimeUnit.MILLISECONDS.toSeconds(mills - minutes * 60 * 1000);
 		return String.format("(%02d:%02d)", minutes, seconds);
 	}
 }

@@ -20,21 +20,22 @@ public class GuildPlayerListener extends AudioEventAdapter {
 
 	@Override
 	public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-		if (endReason == AudioTrackEndReason.FINISHED)
+		if (endReason == AudioTrackEndReason.FINISHED) {
 			this.player.next();
+		}
 	}
 
 	@Override
 	public void onTrackStuck(AudioPlayer player, AudioTrack track, long thresholdMs) {
 		LOGGER.error("Track stuck for guild {}", this.player.getGuild().getName());
-		this.player.getGuild().getDefaultChannel().sendMessage("**ERROR** Track Stuck! Skipping track...").queue();
+		this.player.getRequestChannel().sendMessage("**ERROR** Track Stuck! Skipping track...").queue();
 	}
 
 	@Override
 	public void onTrackException(AudioPlayer player, AudioTrack track, FriendlyException exception) {
 		LOGGER.error("Track exception for guild {}", this.player.getGuild().getName(), exception);
-		this.player.getGuild().getDefaultChannel()
-				.sendMessage("**ERROR** There was some problems with the current playing track %nStopping player...")
+		this.player.getRequestChannel()
+				.sendMessage("**ERROR** There was some problems with the current playing track")
 				.queue();
 	}
 }

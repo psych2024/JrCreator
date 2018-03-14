@@ -32,8 +32,17 @@ public class YtResultHandler implements AudioLoadResultHandler {
 	@Override
 	public void trackLoaded(AudioTrack track) {
 		GuildPlayer guildPlayer = GuildPlayerRegistry.getGuildPlayer(guild);
-		guildPlayer.getScheduler().loadTrack(new TrackWrapper(track, member));
-		guildPlayer.play();
+		TrackWrapper wrapper = new TrackWrapper(track, member); 
+		guildPlayer.getScheduler().loadTrack(wrapper);
+		
+		if(guildPlayer.getState() != PlayerState.PLAYING) {
+			guildPlayer.join(member.getVoiceState().getChannel(), channel);
+			guildPlayer.play();
+			channel.sendMessage("Playing **" + wrapper.toString() + "**");
+			return;
+		}
+		
+		channel.sendMessage("Added **" + wrapper.toString() + "** to the playlist");
 	}
 
 	@Override

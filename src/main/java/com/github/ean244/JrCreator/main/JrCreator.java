@@ -26,7 +26,9 @@ import com.github.ean244.jrcreator.commands.dj.SkipCommand;
 import com.github.ean244.jrcreator.commands.dj.StopCommand;
 import com.github.ean244.jrcreator.commands.dj.YoutubeCommand;
 import com.github.ean244.jrcreator.commands.user.AnnouncementCommand;
+import com.github.ean244.jrcreator.commands.user.FacebookCommand;
 import com.github.ean244.jrcreator.commands.user.GithubCommand;
+import com.github.ean244.jrcreator.commands.user.GitlabCommand;
 import com.github.ean244.jrcreator.config.AnnouncementHandler;
 import com.github.ean244.jrcreator.db.DbHandler;
 import com.github.ean244.jrcreator.listener.VoiceLeaveListener;
@@ -48,6 +50,8 @@ public class JrCreator {
 			LOGGER.error("Failed to setup: Token required!");
 			return;
 		}
+		
+		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExeptionHandler());
 
 		jda = new JDABuilder(AccountType.BOT).setToken(args[0]).buildAsync();
 
@@ -152,6 +156,8 @@ public class JrCreator {
 		registry.register(new ClearPlayListCommand());
 		registry.register(new PauseCommand());
 		registry.register(new ResumeCommand());
+		registry.register(new GitlabCommand());
+		registry.register(new FacebookCommand());
 	}
 
 	public static JDA getJda() {

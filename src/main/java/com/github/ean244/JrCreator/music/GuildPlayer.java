@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.managers.AudioManager;
 
@@ -14,6 +15,7 @@ public class GuildPlayer {
 	private final Guild guild;
 	private PlayerState state;
 	private VoiceChannel joinedChannel;
+	private TextChannel requestChannel;
 	private final TrackScheduler scheduler;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GuildPlayer.class);
@@ -26,7 +28,7 @@ public class GuildPlayer {
 		this.player.addListener(new GuildPlayerListener(this));
 	}
 
-	public void join(VoiceChannel channel) {
+	public void join(VoiceChannel channel, TextChannel request) {
 		leave();
 
 		this.state = PlayerState.JOINED;
@@ -35,6 +37,8 @@ public class GuildPlayer {
 		AudioManager audioManager = guild.getAudioManager();
 
 		joinedChannel = channel;
+		
+		requestChannel = request;
 
 		if (audioManager.isConnected())
 			audioManager.closeAudioConnection();
@@ -52,6 +56,8 @@ public class GuildPlayer {
 
 		joinedChannel = null;
 		
+		requestChannel = null;
+		
 		scheduler.clearPlaylistSongs();
 
 		guild.getAudioManager().closeAudioConnection();
@@ -64,9 +70,7 @@ public class GuildPlayer {
 		this.state = PlayerState.PLAYING;
 		logState();
 
-		System.out.println("b4 stuck");
 		player.playTrack(scheduler.currentTrack().getTrack());
-		System.out.println("after stuck");
 		LOGGER.info("Playing track {} in guild {}", scheduler.currentTrack().getTitle(), guild.getName());
 	}
 
@@ -128,6 +132,10 @@ public class GuildPlayer {
 		return state;
 	}
 
+	public TextChannel getRequestChannel() {
+		return requestChannel;
+	}
+	
 	private void logState() {
 		LOGGER.info("Changed PlayerState for Guild {}: {}", guild.getName(), state);
 	}

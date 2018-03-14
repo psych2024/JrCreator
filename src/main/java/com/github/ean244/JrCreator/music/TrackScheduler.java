@@ -22,6 +22,7 @@ public class TrackScheduler {
 	public TrackWrapper loadSelectedTrack(Member member, int index) {
 		TrackWrapper wrapper = new TrackWrapper(memberSelectedTrack.get(member).getTracks().get(index), member);
 		loadTrack(wrapper);
+		memberSelectedTrack.remove(member);
 		return wrapper;
 	}
 	
@@ -34,6 +35,9 @@ public class TrackScheduler {
 	}
 	
 	public void loadTrack(TrackWrapper track) {
+		if(track == null)
+			throw new IllegalStateException("Track cannot be null");
+		
 		this.playlist.add(track);
 	}
 	

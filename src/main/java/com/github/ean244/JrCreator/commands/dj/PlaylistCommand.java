@@ -29,7 +29,7 @@ public class PlaylistCommand implements Commands {
 		StringBuilder builder = new StringBuilder(String.format("**Currently playing:** %s%n", playlist.get(0).toString()));
 		
 		for(int i = 1; i < playlist.size(); i++) {
-			builder.append(String.format("**%d** %s%n", i, playlist.get(0).toString()));
+			builder.append(String.format("**%d** %s%n", i, playlist.get(i).toString()));
 		}
 		
 		channel.sendMessage(builder.toString()).queue();
