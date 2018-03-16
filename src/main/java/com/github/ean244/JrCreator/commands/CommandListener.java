@@ -35,11 +35,12 @@ public class CommandListener extends ListenerAdapter {
 		Guild guild = event.getGuild();
 		Member member = event.getMember();
 		String msg = event.getMessage().getContentRaw();
-		String prefix = new PrefixImpl().request(guild);
 
 		if (event.getAuthor().isBot())
 			return;
 
+		String prefix = new PrefixImpl().request(guild);
+		
 		if (msg.startsWith(prefix) || msg.split(" ")[0].equals(JrCreator.getJda().getSelfUser().getAsMention())) {
 			String[] args = msg.split(" ");
 

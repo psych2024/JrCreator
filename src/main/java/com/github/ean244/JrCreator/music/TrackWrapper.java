@@ -16,7 +16,7 @@ public class TrackWrapper {
 	}
 	
 	public AudioTrack getTrack() {
-		return track;
+		return track.makeClone();
 	}
 	
 	public Member getRequester() {

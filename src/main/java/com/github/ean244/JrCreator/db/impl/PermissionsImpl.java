@@ -72,8 +72,8 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 
 			if (result.next()) {
 				LOGGER.info("Recieved {}", result.getInt("perms"));
-				
-				return PermissionLevel.of(result.getInt("perms"));
+				PermissionLevel level = PermissionLevel.of(result.getInt("perms"));
+				return level;
 			}
 
 		} catch (SQLException e) {
@@ -98,6 +98,7 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 			statement.setLong(4, perms.level());
 
 			statement.executeUpdate();
+			
 
 		} catch (SQLException e) {
 			LOGGER.error("Failed to update permissions for member!", e);

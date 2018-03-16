@@ -4,7 +4,6 @@ import com.github.ean244.jrcreator.commands.CommandMeta;
 import com.github.ean244.jrcreator.commands.Commands;
 import com.github.ean244.jrcreator.music.GuildPlayer;
 import com.github.ean244.jrcreator.music.GuildPlayerRegistry;
-import com.github.ean244.jrcreator.music.PlayerState;
 import com.github.ean244.jrcreator.music.TrackWrapper;
 import com.github.ean244.jrcreator.perms.PermissionLevel;
 
@@ -43,7 +42,7 @@ public class PlayCommand implements Commands {
 		}
 
 		// check if currently a song is played
-		if (guildPlayer.getState() == PlayerState.PLAYING) {
+		if (!guildPlayer.getScheduler().isPlaylistEmpty()) {
 			TrackWrapper wrapper = guildPlayer.getScheduler().loadSelectedTrack(member, id);
 			channel.sendMessage("Added **" + wrapper.toString() + "** to playlist").queue();
 			return true;
