@@ -37,7 +37,7 @@ public class GuildPlayer {
 		AudioManager audioManager = guild.getAudioManager();
 
 		joinedChannel = channel;
-		
+
 		requestChannel = request;
 
 		if (audioManager.isConnected())
@@ -55,18 +55,14 @@ public class GuildPlayer {
 		logState();
 
 		joinedChannel = null;
-		
-		requestChannel = null;
-		
-		scheduler.clearPlaylistSongs();
 
-		guild.getAudioManager().closeAudioConnection();
+		requestChannel = null;
 	}
 
 	public void play() {
-		if(this.state == PlayerState.PLAYING) 
+		if (this.state == PlayerState.PLAYING)
 			throw new IllegalStateException("Play() called twice");
-		
+
 		this.state = PlayerState.PLAYING;
 		logState();
 
@@ -89,11 +85,15 @@ public class GuildPlayer {
 	}
 
 	public void next() {
-		LOGGER.info("Skipping track...");
+		player.stopTrack();
+		
+		this.state = PlayerState.SKIPPING;
+		logState();
 
-		stop();
-
-		play();
+		if (scheduler.hasNext()) {
+			scheduler.next();
+			play();
+		}
 	}
 
 	public void stop() {
@@ -101,11 +101,8 @@ public class GuildPlayer {
 		logState();
 
 		player.stopTrack();
-
-		if (scheduler.hasNext()) {
-			scheduler.next();
-			return;
-		}
+		
+		scheduler.clearPlaylistSongs();
 	}
 
 	public AudioPlayer getPlayer() {
@@ -135,7 +132,7 @@ public class GuildPlayer {
 	public TextChannel getRequestChannel() {
 		return requestChannel;
 	}
-	
+
 	private void logState() {
 		LOGGER.info("Changed PlayerState for Guild {}: {}", guild.getName(), state);
 	}

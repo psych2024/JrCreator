@@ -16,7 +16,7 @@ public class TrackWrapper {
 	}
 	
 	public AudioTrack getTrack() {
-		return track.makeClone();
+		return track;
 	}
 	
 	public Member getRequester() {
@@ -25,6 +25,10 @@ public class TrackWrapper {
 	
 	public String getTitle() {
 		return track.getInfo().title;
+	}
+	
+	public void rewind() {
+		track.setPosition(0);
 	}
 	
 	@Override

@@ -45,7 +45,7 @@ public class CommandListener extends ListenerAdapter {
 			String[] args = msg.split(" ");
 
 			if (msg.startsWith(prefix)) {
-				args[0] = args[0].replace(prefix, "");
+				args[0] = args[0].replaceFirst(prefix, "");
 			}
 
 			Commands commands = CommandRegistry.getInstance().getCommand(args[0]);

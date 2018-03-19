@@ -21,7 +21,9 @@ import com.github.ean244.jrcreator.commands.dj.LeaveCommand;
 import com.github.ean244.jrcreator.commands.dj.PauseCommand;
 import com.github.ean244.jrcreator.commands.dj.PlayCommand;
 import com.github.ean244.jrcreator.commands.dj.PlaylistCommand;
+import com.github.ean244.jrcreator.commands.dj.RepeatCommand;
 import com.github.ean244.jrcreator.commands.dj.ResumeCommand;
+import com.github.ean244.jrcreator.commands.dj.RewindCommand;
 import com.github.ean244.jrcreator.commands.dj.SkipCommand;
 import com.github.ean244.jrcreator.commands.dj.StopCommand;
 import com.github.ean244.jrcreator.commands.dj.YoutubeCommand;
@@ -50,7 +52,7 @@ public class JrCreator {
 			LOGGER.error("Failed to setup: Token required!");
 			return;
 		}
-		
+
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExeptionHandler());
 
 		jda = new JDABuilder(AccountType.BOT).setToken(args[0]).buildAsync();
@@ -158,6 +160,8 @@ public class JrCreator {
 		registry.register(new ResumeCommand());
 		registry.register(new GitlabCommand());
 		registry.register(new FacebookCommand());
+		registry.register(new RewindCommand());
+		registry.register(new RepeatCommand());
 	}
 
 	public static JDA getJda() {

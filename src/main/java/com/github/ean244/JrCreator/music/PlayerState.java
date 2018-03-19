@@ -4,6 +4,7 @@ public enum PlayerState {
 	PLAYING,
 	STOPPED,
 	PAUSED,
+	SKIPPING,
 	JOINED,
 	NOT_JOINED;
 }
