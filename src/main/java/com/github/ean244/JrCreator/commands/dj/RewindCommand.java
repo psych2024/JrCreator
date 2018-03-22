@@ -4,7 +4,6 @@ import com.github.ean244.jrcreator.commands.CommandMeta;
 import com.github.ean244.jrcreator.commands.Commands;
 import com.github.ean244.jrcreator.music.GuildPlayer;
 import com.github.ean244.jrcreator.music.GuildPlayerRegistry;
-import com.github.ean244.jrcreator.music.PlayerState;
 import com.github.ean244.jrcreator.perms.PermissionLevel;
 
 import net.dv8tion.jda.core.entities.Guild;
@@ -21,12 +20,12 @@ public class RewindCommand implements Commands {
 		
 		GuildPlayer player = GuildPlayerRegistry.getGuildPlayer(guild);
 		
-		if(player.getState() != PlayerState.PLAYING) {
+		if(!player.isPlayingOrPaused()) {
 			channel.sendMessage("No music playing currently!").queue();
 			return true;
 		}
 		
-		player.getScheduler().currentTrack().rewind();
+		player.setCurrentTrackPosition(0);
 		channel.sendMessage("Rewinding song...").queue();
 		return true;
 	}

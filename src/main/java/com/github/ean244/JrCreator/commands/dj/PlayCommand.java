@@ -6,6 +6,7 @@ import com.github.ean244.jrcreator.music.GuildPlayer;
 import com.github.ean244.jrcreator.music.GuildPlayerRegistry;
 import com.github.ean244.jrcreator.music.TrackWrapper;
 import com.github.ean244.jrcreator.perms.PermissionLevel;
+import com.github.ean244.jrcreator.utils.PrimitiveUtils;
 
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
@@ -19,7 +20,7 @@ public class PlayCommand implements Commands {
 		if (args.length != 1)
 			return false;
 
-		if (!isInteger(args[0]))
+		if (!PrimitiveUtils.isInteger(args[0]))
 			return false;
 
 		int id = Integer.parseInt(args[0]);
@@ -59,29 +60,4 @@ public class PlayCommand implements Commands {
 		channel.sendMessage("Playing **" + guildPlayer.getScheduler().currentTrack().getTitle() + "**").queue();
 		return true;
 	}
-
-	private boolean isInteger(String str) {
-		if (str == null) {
-			return false;
-		}
-		int length = str.length();
-		if (length == 0) {
-			return false;
-		}
-		int i = 0;
-		if (str.charAt(0) == '-') {
-			if (length == 1) {
-				return false;
-			}
-			i = 1;
-		}
-		for (; i < length; i++) {
-			char c = str.charAt(i);
-			if (c < '0' || c > '9') {
-				return false;
-			}
-		}
-		return true;
-	}
-
 }

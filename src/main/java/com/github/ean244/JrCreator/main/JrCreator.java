@@ -11,11 +11,12 @@ import org.jline.terminal.TerminalBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.ean244.jrcreator.commands.CommandListener;
 import com.github.ean244.jrcreator.commands.CommandRegistry;
 import com.github.ean244.jrcreator.commands.admin.ListCommand;
 import com.github.ean244.jrcreator.commands.admin.SetPrefixCommand;
+import com.github.ean244.jrcreator.commands.dj.BackwardCommand;
 import com.github.ean244.jrcreator.commands.dj.ClearPlayListCommand;
+import com.github.ean244.jrcreator.commands.dj.ForwardCommand;
 import com.github.ean244.jrcreator.commands.dj.JoinCommand;
 import com.github.ean244.jrcreator.commands.dj.LeaveCommand;
 import com.github.ean244.jrcreator.commands.dj.PauseCommand;
@@ -31,10 +32,12 @@ import com.github.ean244.jrcreator.commands.user.AnnouncementCommand;
 import com.github.ean244.jrcreator.commands.user.FacebookCommand;
 import com.github.ean244.jrcreator.commands.user.GithubCommand;
 import com.github.ean244.jrcreator.commands.user.GitlabCommand;
+import com.github.ean244.jrcreator.commands.user.HelpCommand;
 import com.github.ean244.jrcreator.config.AnnouncementHandler;
 import com.github.ean244.jrcreator.db.DbHandler;
+import com.github.ean244.jrcreator.dialogflow.AIManager;
+import com.github.ean244.jrcreator.listener.CommandListener;
 import com.github.ean244.jrcreator.listener.VoiceLeaveListener;
-import com.github.ean244.jrcreator.listener.TagListener;
 
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -48,8 +51,8 @@ public class JrCreator {
 	}
 
 	public static void main(String[] args) throws LoginException {
-		if (args.length != 1) {
-			LOGGER.error("Failed to setup: Token required!");
+		if (args.length != 2) {
+			LOGGER.error("Failed to setup: Tokens required!");
 			return;
 		}
 
@@ -57,6 +60,8 @@ public class JrCreator {
 
 		jda = new JDABuilder(AccountType.BOT).setToken(args[0]).buildAsync();
 
+		AIManager.CLIENT_TOKEN = args[1];
+		
 		onEnable();
 
 		startTerminalTask();
@@ -137,7 +142,6 @@ public class JrCreator {
 
 	private static void addListener() {
 		jda.addEventListener(new CommandListener());
-		jda.addEventListener(new TagListener());
 		jda.addEventListener(new VoiceLeaveListener());
 	}
 
@@ -162,6 +166,9 @@ public class JrCreator {
 		registry.register(new FacebookCommand());
 		registry.register(new RewindCommand());
 		registry.register(new RepeatCommand());
+		registry.register(new ForwardCommand());
+		registry.register(new BackwardCommand());
+		registry.register(new HelpCommand());
 	}
 
 	public static JDA getJda() {

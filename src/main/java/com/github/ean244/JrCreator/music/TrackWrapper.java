@@ -27,10 +27,6 @@ public class TrackWrapper {
 		return track.getInfo().title;
 	}
 	
-	public void rewind() {
-		track.setPosition(0);
-	}
-	
 	@Override
 	public String toString() {
 		return track.getInfo().title + " " + (track.getPosition() == 0 ? totalDuration() : currentDuration());
@@ -44,7 +40,7 @@ public class TrackWrapper {
 		return format(track.getPosition());
 	}
 	
-	private String format(long mills) {
+	public static String format(long mills) {
 		long minutes = TimeUnit.MILLISECONDS.toMinutes(mills);
 		long seconds = TimeUnit.MILLISECONDS.toSeconds(mills - minutes * 60 * 1000);
 		return String.format("(%02d:%02d)", minutes, seconds);

@@ -4,7 +4,6 @@ import com.github.ean244.jrcreator.commands.CommandMeta;
 import com.github.ean244.jrcreator.commands.Commands;
 import com.github.ean244.jrcreator.music.GuildPlayer;
 import com.github.ean244.jrcreator.music.GuildPlayerRegistry;
-import com.github.ean244.jrcreator.music.PlayerState;
 import com.github.ean244.jrcreator.perms.PermissionLevel;
 
 import net.dv8tion.jda.core.entities.Guild;
@@ -18,7 +17,7 @@ public class StopCommand implements Commands {
 	public boolean onExecute(TextChannel channel, Guild guild, Member member, String[] args) {
 		GuildPlayer player = GuildPlayerRegistry.getGuildPlayer(guild);
 		
-		if(player.getState() != PlayerState.PLAYING) {
+		if(!player.isPlayingOrPaused()) {
 			channel.sendMessage("No music playing currently!").queue();
 			return true;
 		}

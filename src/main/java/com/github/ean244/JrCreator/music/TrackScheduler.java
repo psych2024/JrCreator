@@ -34,18 +34,18 @@ public class TrackScheduler {
 		return memberSelectedTrack.containsKey(member);
 	}
 	
+	public TrackWrapper currentTrack() {
+		if(playlist.isEmpty()) 
+			throw new IllegalArgumentException("No tracks in playlist");
+		
+		return playlist.get(0);
+	}
+	
 	public void loadTrack(TrackWrapper track) {
 		if(track == null)
 			throw new IllegalStateException("Track cannot be null");
 		
 		this.playlist.add(track);
-	}
-	
-	public TrackWrapper currentTrack() {
-		if(playlist.isEmpty())
-			throw new NullPointerException("Empty playlist");
-		
-		return playlist.get(0);
 	}
 	
 	public void next() {

@@ -4,7 +4,6 @@ import com.github.ean244.jrcreator.commands.CommandMeta;
 import com.github.ean244.jrcreator.commands.Commands;
 import com.github.ean244.jrcreator.music.GuildPlayer;
 import com.github.ean244.jrcreator.music.GuildPlayerRegistry;
-import com.github.ean244.jrcreator.music.PlayerState;
 import com.github.ean244.jrcreator.perms.PermissionLevel;
 
 import net.dv8tion.jda.core.entities.Guild;
@@ -23,7 +22,7 @@ public class SkipCommand implements Commands {
 			return true;
 		}
 		
-		if(player.getState() != PlayerState.PLAYING) {
+		if(!player.isPlayingOrPaused()) {
 			channel.sendMessage("No songs are played now!").queue();
 			return true;
 		}

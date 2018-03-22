@@ -104,6 +104,18 @@ public class GuildPlayer {
 		
 		scheduler.clearPlaylistSongs();
 	}
+	
+	public long getCurrentTrackPosition() {
+		return player.getPlayingTrack().getPosition();
+	}
+	
+	public void setCurrentTrackPosition(long position) {
+		player.getPlayingTrack().setPosition(position);
+	}
+	
+	public String currentTrackDuration() {
+		return TrackWrapper.format(getCurrentTrackPosition());
+	}
 
 	public AudioPlayer getPlayer() {
 		return player;
@@ -115,6 +127,10 @@ public class GuildPlayer {
 
 	public boolean isInChannel() {
 		return joinedChannel != null;
+	}
+	
+	public boolean isPlayingOrPaused() {
+		return state == PlayerState.PLAYING || state == PlayerState.PAUSED;
 	}
 
 	public Guild getGuild() {

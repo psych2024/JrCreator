@@ -28,7 +28,9 @@ public class PlaylistCommand implements Commands {
 		List<TrackWrapper> playlist = player.getScheduler().getPlaylist();
 		StringBuilder builder = new StringBuilder(String.format("**Currently playing:** %s @ %s%n", playlist.get(0).getTitle(), playlist.get(0).currentDuration()));
 	
-		builder.append("**Coming Up:**\n");
+		if(playlist.size() > 1) {
+			builder.append("\n**Coming Up:**\n");
+		}
 		
 		for(int i = 1; i < playlist.size(); i++) {
 			builder.append(String.format("**%d** %s%n", i, playlist.get(i).toString()));
