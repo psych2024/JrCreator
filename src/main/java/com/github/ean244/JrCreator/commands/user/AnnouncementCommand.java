@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-@CommandMeta(aliases = {}, name = "announcement", permission = PermissionLevel.USER)
+@CommandMeta(aliases = { "announce" }, name = "announcement", permission = PermissionLevel.USER)
 public class AnnouncementCommand implements Commands {
 
 	@Override

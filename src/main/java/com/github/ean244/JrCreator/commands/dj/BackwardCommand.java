@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-@CommandMeta(aliases = { "" }, name = "backward", permission = PermissionLevel.DJ)
+@CommandMeta(aliases = { "backwards" }, name = "backward", permission = PermissionLevel.DJ)
 public class BackwardCommand implements Commands {
 
 	@Override

@@ -29,7 +29,12 @@ public class AIManager {
 		try {
 			response = service.request(request);
 			
-			if(response.getResult().getAction().equals("play-song")) {
+			if(response.getStatus().getCode() != 200) {
+				LOGGER.error(response.getStatus().getErrorDetails());
+				return;
+			}
+			
+			if(response.getResult().getAction().equals("play_song")) {
 				new MusicResponseHandler().handle(response, member, channel);
 				return;
 			}
@@ -37,6 +42,7 @@ public class AIManager {
 			new DefaultResponseHandler().handle(response, member, channel);
 		} catch (AIServiceException e) {
 			LOGGER.error("Failed to execute query", e);
+			LOGGER.error(e.getResponse().getStatus().getErrorType());
 		}
 	}
 	

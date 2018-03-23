@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-@CommandMeta(aliases = { "" }, name = "forward", permission = PermissionLevel.DJ)
+@CommandMeta(aliases = { "forwards" }, name = "forward", permission = PermissionLevel.DJ)
 public class ForwardCommand implements Commands {
 
 	@Override

@@ -23,7 +23,7 @@ public class ListCommand implements Commands {
 		if (!(args[0].equalsIgnoreCase("user") || args[0].equalsIgnoreCase("dj") || args[0].equalsIgnoreCase("admin")))
 			return false;
 
-		channel.sendMessage(member.getAsMention()).queue();
+		channel.sendMessage("**" + args[0].toLowerCase() + "**:\n").queue();
 		new PermissionsImpl().requestCategory(guild, PermissionLevel.of(args[0]))
 				.forEach(id -> channel.sendMessage("- " + JrCreator.getJda().getUserById(id).getName()).queue());
 

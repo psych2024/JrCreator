@@ -8,11 +8,10 @@ import java.util.concurrent.ThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.ean244.jrcreator.commands.CommandParser;
+import com.github.ean244.jrcreator.commands.CommandRegistry;
 import com.github.ean244.jrcreator.commands.Commands;
 import com.github.ean244.jrcreator.db.impl.PermissionsImpl;
 import com.github.ean244.jrcreator.db.impl.PrefixImpl;
-import com.github.ean244.jrcreator.dialogflow.AIManager;
 import com.github.ean244.jrcreator.main.UncaughtExeptionHandler;
 
 import net.dv8tion.jda.core.entities.Guild;
@@ -36,26 +35,20 @@ public class CommandListener extends ListenerAdapter {
 		TextChannel channel = event.getTextChannel();
 		Guild guild = event.getGuild();
 		Member member = event.getMember();
-		String msg = event.getMessage().getContentRaw();
-
-		if (event.getAuthor().isBot())
-			return;
+		String msg = event.getMessage().getContentDisplay();
 
 		String prefix = new PrefixImpl().request(guild);
-		CommandParser parser = new CommandParser(msg, prefix);
 
-		if (!parser.isValid()) {
-			// check if is conversation
-			StringBuilder builder = new StringBuilder();
-
-			Arrays.stream(parser.getArgs()).forEach(s -> builder.append(" " + s));
-
-			AIManager.getInstance().handleResponse(builder.toString().trim(), member, channel);
+		String[] rawArgs = msg.split(" ");
+		
+		if(!rawArgs[0].startsWith(prefix))
 			return;
-		}
-
-		Commands commands = parser.getCommandCalled();
-
+		
+		if (event.getAuthor().isBot())
+			return;
+		
+		Commands commands = CommandRegistry.getInstance().getCommand(rawArgs[0].replaceFirst(prefix, ""));
+		
 		LOGGER.info("User {} executed command /{} in guild {}", member.getUser().getName(), commands.meta().name(),
 				guild.getName());
 
@@ -65,12 +58,12 @@ public class CommandListener extends ListenerAdapter {
 			return;
 		}
 
-		if (!commands.onExecute(channel, guild, member, parser.getArgs())) {
+		if (!commands.onExecute(channel, guild, member, Arrays.copyOfRange(rawArgs, 1, rawArgs.length))) {
 			channel.sendMessage(String.format("%s Incorrect command usage. Do `%shelp` to see a list of commands.",
 					member.getAsMention(), new PrefixImpl().request(guild))).queue();
 		}
 	}
-
+	
 	private static class ExceptionCatchingThreadFactory implements ThreadFactory {
 		public Thread newThread(final Runnable r) {
 			Thread thread = new Thread(r);

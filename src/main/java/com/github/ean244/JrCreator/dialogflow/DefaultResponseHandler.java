@@ -8,9 +8,6 @@ public class DefaultResponseHandler implements ResponseHandler {
 
 	@Override
 	public void handle(AIResponse response, Member member, TextChannel channel) {
-		if(response.getResult().getAction().equals("input.unknown"))
-			return;
-		
-		channel.sendMessage(member.getAsMention() + response.getResult().getFulfillment().getSpeech()).queue();
+		channel.sendMessage(member.getAsMention() + " " + response.getResult().getFulfillment().getSpeech()).queue();
 	}
 }

@@ -29,6 +29,7 @@ import com.github.ean244.jrcreator.commands.dj.SkipCommand;
 import com.github.ean244.jrcreator.commands.dj.StopCommand;
 import com.github.ean244.jrcreator.commands.dj.YoutubeCommand;
 import com.github.ean244.jrcreator.commands.user.AnnouncementCommand;
+import com.github.ean244.jrcreator.commands.user.DocumentationCommand;
 import com.github.ean244.jrcreator.commands.user.FacebookCommand;
 import com.github.ean244.jrcreator.commands.user.GithubCommand;
 import com.github.ean244.jrcreator.commands.user.GitlabCommand;
@@ -37,6 +38,7 @@ import com.github.ean244.jrcreator.config.AnnouncementHandler;
 import com.github.ean244.jrcreator.db.DbHandler;
 import com.github.ean244.jrcreator.dialogflow.AIManager;
 import com.github.ean244.jrcreator.listener.CommandListener;
+import com.github.ean244.jrcreator.listener.ConversationListener;
 import com.github.ean244.jrcreator.listener.VoiceLeaveListener;
 
 import net.dv8tion.jda.core.AccountType;
@@ -120,7 +122,7 @@ public class JrCreator {
 		LOGGER.info("Registering commands...");
 
 		registerCommands();
-
+		
 		LOGGER.info("Commands successfully Registered!");
 	}
 
@@ -143,6 +145,7 @@ public class JrCreator {
 	private static void addListener() {
 		jda.addEventListener(new CommandListener());
 		jda.addEventListener(new VoiceLeaveListener());
+		jda.addEventListener(new ConversationListener());
 	}
 
 	private static void registerCommands() {
@@ -169,6 +172,7 @@ public class JrCreator {
 		registry.register(new ForwardCommand());
 		registry.register(new BackwardCommand());
 		registry.register(new HelpCommand());
+		registry.register(new DocumentationCommand());
 	}
 
 	public static JDA getJda() {
