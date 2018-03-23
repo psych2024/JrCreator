@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -24,28 +26,33 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PermissionsImpl.class);
 	private static final String REQUEST_MEMBER = "SELECT * FROM Users WHERE userId=? AND guildId=?";
-	private static final String REQUEST_CATEGORY = "SELECT * FROM Users WHERE guildId=? AND perms=?";
+	private static final String REQUEST_CATEGORY = "SELECT * FROM Users WHERE guildId=?";
 	private static final String UPDATE_PERMISSION = "INSERT INTO Users (userId, guildId, perms) VALUES (?,?,?) ON DUPLICATE KEY UPDATE perms=?";
 
 	@Override
-	public Set<Long> requestCategory(Guild guild, PermissionLevel perms) {
+	public Set<Long> request(Guild guild, PermissionLevel perms) {
 		LOGGER.info("Fetching {} for guild {}", perms, guild.getName());
 
 		try (Connection connection = DbHandler.getInstance().getConn();
 				PreparedStatement statement = connection.prepareStatement(REQUEST_CATEGORY)) {
 
 			statement.setLong(1, guild.getIdLong());
-			statement.setInt(2, perms.level());
 
 			ResultSet result = statement.executeQuery();
 
-			Set<Long> set = new HashSet<>();
+			Map<Long, Integer> values = new HashMap<>();
 
 			while (result.next()) {
-				set.add(result.getLong("userId"));
+				values.put(result.getLong("userId"), result.getInt("perms"));
 			}
+			
+			//TODO: >= or == ? should we display all users that has specific permissions?
+			
+			Set<Long> set = new HashSet<>();
+			values.entrySet().stream().filter(e -> e.getValue() >= perms.level()).forEach(e -> set.add(e.getKey()));
 
-			guild.getMemberCache().stream().filter(m -> !set.contains(m.getUser().getIdLong()))
+			guild.getMemberCache().stream()
+					.filter(m -> !values.containsKey(m.getUser().getIdLong()))
 					.filter(m -> DefaultSettings.defaultPermission(m).level() >= perms.level())
 					.filter(m -> !m.getUser().isBot()).forEach(m -> set.add(m.getUser().getIdLong()));
 
@@ -98,7 +105,6 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 			statement.setLong(4, perms.level());
 
 			statement.executeUpdate();
-			
 
 		} catch (SQLException e) {
 			LOGGER.error("Failed to update permissions for member!", e);

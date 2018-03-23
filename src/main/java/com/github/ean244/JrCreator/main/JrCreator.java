@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import com.github.ean244.jrcreator.commands.CommandRegistry;
 import com.github.ean244.jrcreator.commands.admin.ListCommand;
+import com.github.ean244.jrcreator.commands.admin.SetPermissionCommand;
 import com.github.ean244.jrcreator.commands.admin.SetPrefixCommand;
 import com.github.ean244.jrcreator.commands.dj.BackwardCommand;
 import com.github.ean244.jrcreator.commands.dj.ClearPlayListCommand;
@@ -173,6 +174,7 @@ public class JrCreator {
 		registry.register(new BackwardCommand());
 		registry.register(new HelpCommand());
 		registry.register(new DocumentationCommand());
+		registry.register(new SetPermissionCommand());
 	}
 
 	public static JDA getJda() {

@@ -38,8 +38,8 @@ public class CommandListener extends ListenerAdapter {
 		String msg = event.getMessage().getContentDisplay();
 
 		String prefix = new PrefixImpl().request(guild);
-
 		String[] rawArgs = msg.split(" ");
+		Commands commands = CommandRegistry.getInstance().getCommand(rawArgs[0].replaceFirst(prefix, ""));
 		
 		if(!rawArgs[0].startsWith(prefix))
 			return;
@@ -47,7 +47,8 @@ public class CommandListener extends ListenerAdapter {
 		if (event.getAuthor().isBot())
 			return;
 		
-		Commands commands = CommandRegistry.getInstance().getCommand(rawArgs[0].replaceFirst(prefix, ""));
+		if(commands == null)
+			return;
 		
 		LOGGER.info("User {} executed command /{} in guild {}", member.getUser().getName(), commands.meta().name(),
 				guild.getName());

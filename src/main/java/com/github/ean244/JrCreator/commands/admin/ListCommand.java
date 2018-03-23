@@ -1,18 +1,19 @@
 package com.github.ean244.jrcreator.commands.admin;
 
+import java.util.Set;
+
 import com.github.ean244.jrcreator.commands.CommandMeta;
 import com.github.ean244.jrcreator.commands.Commands;
 import com.github.ean244.jrcreator.db.impl.PermissionsImpl;
 import com.github.ean244.jrcreator.main.JrCreator;
 import com.github.ean244.jrcreator.perms.PermissionLevel;
+
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-@CommandMeta
-(aliases = {},
-name = "list",
-permission = PermissionLevel.ADMIN)
+@CommandMeta(aliases = {}, name = "list", permission = PermissionLevel.ADMIN)
 public class ListCommand implements Commands {
 
 	@Override
@@ -23,10 +24,17 @@ public class ListCommand implements Commands {
 		if (!(args[0].equalsIgnoreCase("user") || args[0].equalsIgnoreCase("dj") || args[0].equalsIgnoreCase("admin")))
 			return false;
 
-		channel.sendMessage("**" + args[0].toLowerCase() + "**:\n").queue();
-		new PermissionsImpl().requestCategory(guild, PermissionLevel.of(args[0]))
-				.forEach(id -> channel.sendMessage("- " + JrCreator.getJda().getUserById(id).getName()).queue());
-
+		Set<Long> users = new PermissionsImpl().request(guild, PermissionLevel.of(args[0]));
+		
+		MessageBuilder builder = new MessageBuilder("**" + args[0].toLowerCase() + "**:\n");
+		
+		if(users.isEmpty()) {
+			builder.append("none").sendTo(channel).queue();
+			return true;
+		}
+		
+		users.forEach(id -> builder.append("- " + JrCreator.getJda().getUserById(id).getName() + "\n"));
+		builder.sendTo(channel).queue();
 		return true;
 	}
 }

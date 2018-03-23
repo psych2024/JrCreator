@@ -14,7 +14,6 @@ public class GuildPlayer {
 	private final AudioPlayer player;
 	private final Guild guild;
 	private PlayerState state;
-	private VoiceChannel joinedChannel;
 	private TextChannel requestChannel;
 	private final TrackScheduler scheduler;
 
@@ -36,8 +35,6 @@ public class GuildPlayer {
 
 		AudioManager audioManager = guild.getAudioManager();
 
-		joinedChannel = channel;
-
 		requestChannel = request;
 
 		if (audioManager.isConnected())
@@ -50,11 +47,11 @@ public class GuildPlayer {
 	public void leave() {
 		// stop current song
 		stop();
+		
+		guild.getAudioManager().closeAudioConnection();
 
 		this.state = PlayerState.NOT_JOINED;
 		logState();
-
-		joinedChannel = null;
 
 		requestChannel = null;
 	}
@@ -122,11 +119,11 @@ public class GuildPlayer {
 	}
 
 	public VoiceChannel getJoinedChannel() {
-		return joinedChannel;
+		return guild.getAudioManager().getConnectedChannel();
 	}
 
 	public boolean isInChannel() {
-		return joinedChannel != null;
+		return guild.getAudioManager().isConnected();
 	}
 	
 	public boolean isPlayingOrPaused() {
