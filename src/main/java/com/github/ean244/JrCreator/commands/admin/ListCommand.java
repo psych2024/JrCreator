@@ -5,7 +5,6 @@ import java.util.Set;
 import com.github.ean244.jrcreator.commands.CommandMeta;
 import com.github.ean244.jrcreator.commands.Commands;
 import com.github.ean244.jrcreator.db.impl.PermissionsImpl;
-import com.github.ean244.jrcreator.main.JrCreator;
 import com.github.ean244.jrcreator.perms.PermissionLevel;
 
 import net.dv8tion.jda.core.MessageBuilder;
@@ -33,7 +32,7 @@ public class ListCommand implements Commands {
 			return true;
 		}
 		
-		users.forEach(id -> builder.append("- " + JrCreator.getJda().getUserById(id).getName() + "\n"));
+		users.forEach(id -> builder.append("- " + guild.getMemberById(id).getNickname() + "\n"));
 		builder.sendTo(channel).queue();
 		return true;
 	}

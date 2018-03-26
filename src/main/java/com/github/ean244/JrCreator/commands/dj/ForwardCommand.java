@@ -1,5 +1,7 @@
 package com.github.ean244.jrcreator.commands.dj;
 
+import java.util.concurrent.TimeUnit;
+
 import com.github.ean244.jrcreator.commands.CommandMeta;
 import com.github.ean244.jrcreator.commands.Commands;
 import com.github.ean244.jrcreator.db.impl.PrefixImpl;
@@ -40,7 +42,7 @@ public class ForwardCommand implements Commands {
 			return true;
 		}
 
-		player.setCurrentTrackPosition(player.getCurrentTrackPosition() + time);
+		player.setCurrentTrackPosition(player.getCurrentTrackPosition() + TimeUnit.SECONDS.toMillis(time));
 		channel.sendMessage("Forwarding current track by " + time + " seconds.\n Playing at `"
 				+ player.currentTrackDuration() + "`").queue();
 		return true;

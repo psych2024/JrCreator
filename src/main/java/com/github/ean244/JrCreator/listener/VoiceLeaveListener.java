@@ -15,10 +15,13 @@ public class VoiceLeaveListener extends ListenerAdapter {
 		if (event.getChannelLeft().getMembers().stream().filter(m -> !m.getUser().isBot()).count() != 0)
 			return;
 		
+		if(!event.getChannelLeft().equals(guildPlayer.getJoinedChannel()))
+			return;
+		
 		if (!guildPlayer.isInChannel())
 			return;
 
-		event.getGuild().getDefaultChannel().sendMessage("Leaving voice channel as no one is inside").queue();
+		guildPlayer.getRequestChannel().sendMessage("Leaving voice channel as no one is inside").queue();
 		guildPlayer.leave();
 	}
 }
