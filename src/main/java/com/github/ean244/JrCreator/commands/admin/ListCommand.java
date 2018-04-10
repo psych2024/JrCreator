@@ -32,7 +32,7 @@ public class ListCommand implements Commands {
 			return true;
 		}
 		
-		users.forEach(id -> builder.append("- " + guild.getMemberById(id).getNickname() + "\n"));
+		users.forEach(id -> builder.append("- " + guild.getMemberById(id).getEffectiveName() + "\n"));
 		builder.sendTo(channel).queue();
 		return true;
 	}

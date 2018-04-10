@@ -35,7 +35,7 @@ import com.github.ean244.jrcreator.commands.user.FacebookCommand;
 import com.github.ean244.jrcreator.commands.user.GithubCommand;
 import com.github.ean244.jrcreator.commands.user.GitlabCommand;
 import com.github.ean244.jrcreator.commands.user.HelpCommand;
-import com.github.ean244.jrcreator.config.AnnouncementHandler;
+import com.github.ean244.jrcreator.announcement.AnnouncementHandler;
 import com.github.ean244.jrcreator.db.DbHandler;
 import com.github.ean244.jrcreator.dialogflow.AIManager;
 import com.github.ean244.jrcreator.listener.CommandListener;
@@ -64,7 +64,7 @@ public class JrCreator {
 		jda = new JDABuilder(AccountType.BOT).setToken(args[0]).buildAsync();
 
 		AIManager.CLIENT_TOKEN = args[1];
-		
+
 		onEnable();
 
 		startTerminalTask();
@@ -111,8 +111,6 @@ public class JrCreator {
 	private static void onEnable() {
 		// connect to database
 		DbHandler.getInstance().connDb();
-
-		AnnouncementHandler.getInstance().readContent();
 
 		LOGGER.info("Initializing listeners...");
 

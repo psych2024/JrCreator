@@ -19,6 +19,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 name = "help",
 permission = PermissionLevel.USER)
 public class HelpCommand implements Commands {
+
 	
 	@Override
 	public boolean onExecute(TextChannel channel, Guild guild, Member member, String[] args) {
@@ -26,8 +27,8 @@ public class HelpCommand implements Commands {
 			return false;
 		
 		String prefix = new PrefixImpl().request(guild);
-		channel.sendFile(new File("src/main/resources/banner.png")).queue((m) ->  {
-			Message message = new MessageBuilder()
+		channel.sendFile(new File("\\src\\main\\resources\\banner.png"),
+			new MessageBuilder()
 					.append("\n")
 					.append("JrCreator - music bot created by Lim Hee Lai\n")
 					.append("\n")
@@ -43,11 +44,8 @@ public class HelpCommand implements Commands {
 					.append("\n")
 					.append("Do `" + prefix + "docs` to see a full list of commands and permissions")
 					.setEmbed(null)
-					.build();
-			
-			
-			channel.sendMessage(message).queue();
-		});
+					.build()
+		).queue();
 		return true;
 	}
 

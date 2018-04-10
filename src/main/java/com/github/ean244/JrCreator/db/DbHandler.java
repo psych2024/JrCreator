@@ -38,7 +38,7 @@ public class DbHandler {
 	public void connDb() {
 		LOGGER.info("Initializing data source...");
 
-		this.dataSource = new HikariDataSource(new HikariConfig("src/main/resources/db.properties"));
+		this.dataSource = new HikariDataSource(new HikariConfig("/db.properties"));
 		
 		LOGGER.info("Data source successfully initialized!!");
 

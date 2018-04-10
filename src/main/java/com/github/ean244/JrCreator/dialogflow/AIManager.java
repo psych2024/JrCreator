@@ -20,6 +20,7 @@ public class AIManager {
 	
 	private AIManager(String token) {
 		configuration = new AIConfiguration(token);
+
 		service = new AIDataService(configuration);
 	}
 
