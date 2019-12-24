@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.db;
+package com.github.ean244.JrCreator.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

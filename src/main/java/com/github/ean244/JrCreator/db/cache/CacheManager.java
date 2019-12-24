@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.db.cache;
+package com.github.ean244.JrCreator.db.cache;
 
 import java.util.HashMap;
 import java.util.Map;
