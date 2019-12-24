@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.listener;
+package com.github.ean244.JrCreator.listener;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
@@ -8,11 +8,11 @@ import java.util.concurrent.ThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.ean244.jrcreator.commands.CommandRegistry;
-import com.github.ean244.jrcreator.commands.Commands;
-import com.github.ean244.jrcreator.db.impl.PermissionsImpl;
-import com.github.ean244.jrcreator.db.impl.PrefixImpl;
-import com.github.ean244.jrcreator.main.UncaughtExeptionHandler;
+import com.github.ean244.JrCreator.commands.CommandRegistry;
+import com.github.ean244.JrCreator.commands.Commands;
+import com.github.ean244.JrCreator.db.impl.PermissionsImpl;
+import com.github.ean244.JrCreator.db.impl.PrefixImpl;
+import com.github.ean244.JrCreator.main.UncaughtExeptionHandler;
 
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;

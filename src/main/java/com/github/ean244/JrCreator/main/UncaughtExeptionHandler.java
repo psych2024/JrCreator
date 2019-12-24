@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.main;
+package com.github.ean244.JrCreator.main;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

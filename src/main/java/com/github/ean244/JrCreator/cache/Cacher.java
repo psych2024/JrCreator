@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.cache;
+package com.github.ean244.JrCreator.cache;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

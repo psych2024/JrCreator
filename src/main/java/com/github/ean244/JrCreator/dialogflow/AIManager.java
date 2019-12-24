@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.dialogflow;
+package com.github.ean244.JrCreator.dialogflow;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

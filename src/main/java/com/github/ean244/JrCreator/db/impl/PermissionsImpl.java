@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.db.impl;
+package com.github.ean244.JrCreator.db.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,14 +10,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.github.ean244.JrCreator.db.DbHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.ean244.jrcreator.db.DbHandler;
-import com.github.ean244.jrcreator.db.api.PermRequest;
-import com.github.ean244.jrcreator.db.api.PermUpdate;
-import com.github.ean244.jrcreator.guild.DefaultSettings;
-import com.github.ean244.jrcreator.perms.PermissionLevel;
+import com.github.ean244.JrCreator.db.api.PermRequest;
+import com.github.ean244.JrCreator.db.api.PermUpdate;
+import com.github.ean244.JrCreator.guild.DefaultSettings;
+import com.github.ean244.JrCreator.perms.PermissionLevel;
 
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
@@ -34,7 +34,7 @@ public class PermissionsImpl implements PermRequest, PermUpdate {
 		LOGGER.info("Fetching {} for guild {}", perms, guild.getName());
 
 		try (Connection connection = DbHandler.getInstance().getConn();
-				PreparedStatement statement = connection.prepareStatement(REQUEST_CATEGORY)) {
+			 PreparedStatement statement = connection.prepareStatement(REQUEST_CATEGORY)) {
 
 			statement.setLong(1, guild.getIdLong());
 

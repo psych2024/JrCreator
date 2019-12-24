@@ -1,9 +1,9 @@
-package com.github.ean244.jrcreator.music;
+package com.github.ean244.JrCreator.music;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.ean244.jrcreator.db.impl.PrefixImpl;
+import com.github.ean244.JrCreator.db.impl.PrefixImpl;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;

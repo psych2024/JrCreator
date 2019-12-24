@@ -1,7 +1,7 @@
-package com.github.ean244.jrcreator.listener;
+package com.github.ean244.JrCreator.listener;
 
-import com.github.ean244.jrcreator.music.GuildPlayer;
-import com.github.ean244.jrcreator.music.GuildPlayerRegistry;
+import com.github.ean244.JrCreator.music.GuildPlayer;
+import com.github.ean244.JrCreator.music.GuildPlayerRegistry;
 
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceUpdateEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;

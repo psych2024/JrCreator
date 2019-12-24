@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.task;
+package com.github.ean244.JrCreator.task;
 
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;

@@ -107,7 +107,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.github.ean244.jrcreator.main.JrCreator</mainClass>
+							<mainClass>com.github.ean244.JrCreator.main.JrCreator</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

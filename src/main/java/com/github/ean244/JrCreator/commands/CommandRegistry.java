@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.commands;
+package com.github.ean244.JrCreator.commands;
 
 import java.util.Arrays;
 import java.util.HashMap;

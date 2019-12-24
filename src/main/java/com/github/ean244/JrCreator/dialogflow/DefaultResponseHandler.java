@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.dialogflow;
+package com.github.ean244.JrCreator.dialogflow;
 
 import ai.api.model.AIResponse;
 import net.dv8tion.jda.core.entities.Member;

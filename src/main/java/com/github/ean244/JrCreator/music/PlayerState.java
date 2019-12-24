@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.music;
+package com.github.ean244.JrCreator.music;
 
 public enum PlayerState {
 	PLAYING,

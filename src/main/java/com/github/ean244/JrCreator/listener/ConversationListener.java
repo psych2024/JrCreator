@@ -1,9 +1,9 @@
-package com.github.ean244.jrcreator.listener;
+package com.github.ean244.JrCreator.listener;
 
 import java.util.Arrays;
 
-import com.github.ean244.jrcreator.db.impl.PrefixImpl;
-import com.github.ean244.jrcreator.dialogflow.AIManager;
+import com.github.ean244.JrCreator.db.impl.PrefixImpl;
+import com.github.ean244.JrCreator.dialogflow.AIManager;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;

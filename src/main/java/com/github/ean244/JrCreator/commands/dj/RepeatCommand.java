@@ -1,12 +1,12 @@
-package com.github.ean244.jrcreator.commands.dj;
+package com.github.ean244.JrCreator.commands.dj;
 
-import com.github.ean244.jrcreator.commands.CommandMeta;
-import com.github.ean244.jrcreator.commands.Commands;
-import com.github.ean244.jrcreator.music.GuildPlayer;
-import com.github.ean244.jrcreator.music.GuildPlayerRegistry;
-import com.github.ean244.jrcreator.music.PlayerState;
-import com.github.ean244.jrcreator.music.TrackWrapper;
-import com.github.ean244.jrcreator.perms.PermissionLevel;
+import com.github.ean244.JrCreator.commands.CommandMeta;
+import com.github.ean244.JrCreator.commands.Commands;
+import com.github.ean244.JrCreator.music.GuildPlayer;
+import com.github.ean244.JrCreator.music.GuildPlayerRegistry;
+import com.github.ean244.JrCreator.music.PlayerState;
+import com.github.ean244.JrCreator.music.TrackWrapper;
+import com.github.ean244.JrCreator.perms.PermissionLevel;
 
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;

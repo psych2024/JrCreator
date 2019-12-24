@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.cache;
+package com.github.ean244.JrCreator.cache;
 
 public class PrefixCacher extends Cacher<String> {
 

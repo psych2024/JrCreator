@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.music;
+package com.github.ean244.JrCreator.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;

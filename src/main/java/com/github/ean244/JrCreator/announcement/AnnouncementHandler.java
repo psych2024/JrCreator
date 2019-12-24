@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.announcement;
+package com.github.ean244.JrCreator.announcement;
 
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;

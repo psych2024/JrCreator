@@ -1,6 +1,6 @@
-package com.github.ean244.jrcreator.dialogflow;
+package com.github.ean244.JrCreator.dialogflow;
 
-import com.github.ean244.jrcreator.commands.CommandRegistry;
+import com.github.ean244.JrCreator.commands.CommandRegistry;
 import com.google.gson.JsonElement;
 
 import ai.api.model.AIResponse;

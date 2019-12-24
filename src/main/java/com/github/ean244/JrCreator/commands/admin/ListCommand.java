@@ -1,11 +1,11 @@
-package com.github.ean244.jrcreator.commands.admin;
+package com.github.ean244.JrCreator.commands.admin;
 
 import java.util.Set;
 
-import com.github.ean244.jrcreator.commands.CommandMeta;
-import com.github.ean244.jrcreator.commands.Commands;
-import com.github.ean244.jrcreator.db.impl.PermissionsImpl;
-import com.github.ean244.jrcreator.perms.PermissionLevel;
+import com.github.ean244.JrCreator.commands.CommandMeta;
+import com.github.ean244.JrCreator.commands.Commands;
+import com.github.ean244.JrCreator.db.impl.PermissionsImpl;
+import com.github.ean244.JrCreator.perms.PermissionLevel;
 
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Guild;

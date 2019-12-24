@@ -1,18 +1,18 @@
-package com.github.ean244.jrcreator.db.impl;
+package com.github.ean244.JrCreator.db.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.github.ean244.JrCreator.db.DbHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.ean244.jrcreator.cache.PrefixCacher;
-import com.github.ean244.jrcreator.db.DbHandler;
-import com.github.ean244.jrcreator.db.api.PrefixRequest;
-import com.github.ean244.jrcreator.db.api.PrefixUpdate;
-import com.github.ean244.jrcreator.guild.DefaultSettings;
+import com.github.ean244.JrCreator.cache.PrefixCacher;
+import com.github.ean244.JrCreator.db.api.PrefixRequest;
+import com.github.ean244.JrCreator.db.api.PrefixUpdate;
+import com.github.ean244.JrCreator.guild.DefaultSettings;
 
 import net.dv8tion.jda.core.entities.Guild;
 
@@ -33,7 +33,7 @@ public class PrefixImpl implements PrefixRequest, PrefixUpdate {
 		}
 
 		try (Connection connection = DbHandler.getInstance().getConn();
-				PreparedStatement statement = connection.prepareStatement(REQUEST_PREFIX)) {
+			 PreparedStatement statement = connection.prepareStatement(REQUEST_PREFIX)) {
 
 			statement.setLong(1, guild.getIdLong());
 

@@ -3,7 +3,7 @@ package com.github.ean244.JrCreator.db.cache;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.github.ean244.jrcreator.guild.GuildConfig;
+import com.github.ean244.JrCreator.guild.GuildConfig;
 
 public class CacheManager {
 	private static CacheManager instance;

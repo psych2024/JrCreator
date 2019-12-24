@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.guild;
+package com.github.ean244.JrCreator.guild;
 
 import net.dv8tion.jda.core.entities.Guild;
 

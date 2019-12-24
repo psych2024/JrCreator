@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.utils;
+package com.github.ean244.JrCreator.utils;
 
 public class PrimitiveUtils {
 

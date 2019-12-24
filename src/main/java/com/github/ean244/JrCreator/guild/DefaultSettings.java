@@ -1,9 +1,9 @@
-package com.github.ean244.jrcreator.guild;
+package com.github.ean244.JrCreator.guild;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.github.ean244.jrcreator.perms.PermissionLevel;
+import com.github.ean244.JrCreator.perms.PermissionLevel;
 
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;

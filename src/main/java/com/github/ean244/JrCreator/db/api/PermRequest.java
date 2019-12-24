@@ -1,8 +1,8 @@
-package com.github.ean244.jrcreator.db.api;
+package com.github.ean244.JrCreator.db.api;
 
 import java.util.Set;
 
-import com.github.ean244.jrcreator.perms.PermissionLevel;
+import com.github.ean244.JrCreator.perms.PermissionLevel;
 
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;

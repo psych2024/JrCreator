@@ -1,4 +1,4 @@
-package com.github.ean244.jrcreator.perms;
+package com.github.ean244.JrCreator.perms;
 
 public enum PermissionLevel {
 	ADMIN(2), DJ(1), USER(0);
